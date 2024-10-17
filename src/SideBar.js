@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   Home,
   Users,
@@ -10,13 +10,13 @@ import {
   ChevronDown,
   ChevronUp,
   Menu,
-  X,
+  UserRound,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const SidebarWrapper = styled.div`
   position: fixed;
-  top: 60px;
+
   justify-content: center;
   padding: 1.5rem;
   width: 300px;
@@ -26,10 +26,11 @@ const SidebarWrapper = styled.div`
   font-family: "Noto Sans kr";
   transition: transform 0.3s ease-in-out;
 
-  @media (max-width: 500px) {
+  @media (max-width: 800px) {
     transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
     width: 100%;
     z-index: 1000;
+      top: 60px;
   }
 
   > div.title {
@@ -54,9 +55,17 @@ const HeaderBar = styled.div`
   justify-content: space-between;
   z-index: 100;
 
-  @media (max-width: 500px) {
+  @media (max-width: 800px) {
     display: flex;
   }
+`;
+
+const CenteredTitle = styled.div`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 600;
 `;
 
 const HamburgerButton = styled.button`
@@ -119,8 +128,76 @@ const AccordionIcon = styled.span`
   margin-left: 10px;
 `;
 
+const DashBoardHeader = styled.div`
+  @media (max-width: 800px) {
+    pointer-events: none; 
+    opacity: 0;
+  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  > .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  > .userInfo {
+    display: flex;
+    align-items: center;
+    > .position {
+      margin-right: 0.5rem;
+    }
+    > .profile {
+      width: 3rem;
+      height: 3rem;
+      background-color: #ccc; // Changed from black to a lighter color
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .userName {
+    font-size: 14px;
+    font-weight: 500;
+      @media (max-width: 350px) {
+      display: none;
+    }
+  }
+
+  .userProfile {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #ccc;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    svg{
+        color:white;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+  }
+`;
+
 function Sidebar() {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [openIndex, setOpenIndex] = useState(0);
@@ -196,7 +273,7 @@ function Sidebar() {
       ],
     },
     {
-      title: "긴급알림 관리",
+      title: "긴급알��� 관리",
       index: "5",
       icon: <Settings size={18} />,
       content: [
@@ -228,8 +305,13 @@ function Sidebar() {
         <HamburgerButton onClick={toggleSidebar}>
           <Menu size={24} />
         </HamburgerButton>
-        <div>오늘의 작업장</div>
-        <div></div> {/* 오른쪽 여백을 위한 빈 div */}
+        <CenteredTitle>오늘의 작업장</CenteredTitle>
+        <UserInfo>
+          <span className="userName">GUEST</span>
+          <div className="userProfile">
+            <UserRound size={30} />
+          </div>
+        </UserInfo>
       </HeaderBar>
       <SidebarWrapper isOpen={isOpen}>
         <div className="title">
@@ -240,7 +322,7 @@ function Sidebar() {
         </div>
         <AccordionContainer>
           {Items.map((props, idx) => {
-            const { key, title, index, icon, content } = props;
+            const { key, title, icon, content } = props;
             return (
               <AccordionItem key={key}>
                 <AccordionHeader

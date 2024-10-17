@@ -7,11 +7,9 @@ import { motion } from 'framer-motion';
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 const DashboardWrapper = styled.div`
-  font-family: 'Noto Sans KR', sans-serif;
   padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  overflow-x: hidden;
 `;
 
 const Title = styled.h2`
@@ -28,7 +26,7 @@ const DateRange = styled.div`
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   gap: 20px;
 `;
 
@@ -37,6 +35,8 @@ const GridItem = styled(motion.div)`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-width: 0;
+  width: 100%;
 `;
 
 const ItemTitle = styled.h3`
@@ -48,6 +48,8 @@ const ItemTitle = styled.h3`
 const ChartContainer = styled.div`
   height: 200px;
   width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 `;
 
 const SafetyWorkPermitDashboard = () => {
@@ -105,6 +107,16 @@ const SafetyWorkPermitDashboard = () => {
           font: {
             size: 10
           }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          maxRotation: 0,
+          minRotation: 0,
+          autoSkip: true,
+          maxTicksLimit: 3
         }
       }
     }

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ChevronDown, Printer } from "lucide-react";
+import { Printer, UserRound } from "lucide-react";
 import DateRangePicker from "./DateRangePicker";
-import CustomDropdown from "./DropDown";
+import CustomDropdown from "./CustomDropdown";
 import WeatherComponent from "./Wheather";
 import NoticeList from "./NoticeList";
 import NewsComponent from "./NewsComponent";
@@ -11,14 +11,21 @@ import SafetyWorkPermitDashboard from "./SafetyWorkPermitDashboard";
 import BarChartComponent from './BarChartComponent';
 import ConstructionSiteMap from './ConstructionSiteMap';
 const DashBoardWrapper = styled.div`
-  padding: 0rem 2rem 0rem 2rem;
-  margin-left: 300px;
+  padding: 0px 20px 0px 320px;
   > div {
     margin-bottom: 1rem;
+  }
+  @media (max-width: 800px) {
+  padding: 80px 20px 0px 20px;
   }
 `;
 
 const DashBoardHeader = styled.div`
+@media (max-width: 800px) {
+pointer-events: none; 
+display: none;
+}
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,14 +44,13 @@ const DashBoardHeader = styled.div`
     > .profile {
       width: 3rem;
       height: 3rem;
-      background-color: black;
-      border: 1px solid black;
+      background-color: #e0e0e0;
+      align-items: center;
+      justify-content: center;
       border-radius: 50%;
       overflow: hidden;
-      img {
-        position: absolute;
-        top: 0;
-        left: 0;
+      svg{
+        color:white;
         width: 100%;
         height: auto;
         object-fit: cover;
@@ -56,6 +62,7 @@ const DashBoardHeader = styled.div`
 const DashBoardSetter = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.8rem;
   min-height: 5rem;
@@ -63,11 +70,22 @@ const DashBoardSetter = styled.div`
   border-radius: 0.8rem;
   background-color: #f8f8fb;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
-  > .subtitle {
+
+  > section {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  }
+  
+  > section:first-child {
+  flex-grow: 1;
+  }
+
+   .subtitle {
     font-size: 1.1rem;
     font-weight: 800;
   }
-  > .location {
+  .location {
     display: flex;
     padding: 0.8rem;
     justify-content: space-between;
@@ -104,6 +122,39 @@ const DashBoardSetter = styled.div`
   }
   .print {
   }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    > section {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    > section:first-child {
+      .subtitle {
+        display: none;
+      }
+
+      > * {
+        width: 100%;
+        margin-bottom: 0.8rem;
+      }
+    }
+
+    > section:last-child {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      > * {
+        flex-basis: calc(50% - 0.4rem);
+        margin-bottom: 0.8rem;
+      }
+    }
+  }
 `;
 
 const DashBoardAssessment = styled.div`
@@ -111,6 +162,11 @@ const DashBoardAssessment = styled.div`
   align-items: center;
   gap: 30px;
   justify-content: space-between;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
   > article {
     display: flex;
@@ -122,13 +178,18 @@ const DashBoardAssessment = styled.div`
     background-color: #ffffff;
     border-radius: 15px;
     font-family: "Noto Sans kr";
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
+    justify-content: space-between;
+
+    @media (max-width: 500px) {
+      margin-bottom: 15px;
+    }
+
     > div {
       flex: 1;
-      display: flex;
+      flex-wrap:wrap;
       align-items: center;
-      gap: 5px;
       > span:first-of-type {
         display: flex;
         align-items: center;
@@ -136,12 +197,15 @@ const DashBoardAssessment = styled.div`
         font-size: 1rem;
         border-radius: 0.5rem;
         height: 2rem;
+        margin-bottom:5px;
       }
       > span:nth-of-type(2) {
-        color: #434343;
+        color: #4a5058;
+        font-size: 17px;
       }
       > span:nth-of-type(3) {
-        color: #aaa;
+        color: #7d7d7d;
+        font-size: 12px;
       }
     }
     .normal {
@@ -155,6 +219,19 @@ const DashBoardAssessment = styled.div`
     .pledge {
       color: #00b33f;
       background-color: #e8ffea;
+    }
+    > div:last-child {
+      display: flex;
+      align-items: baseline;
+      
+      > span:first-child {
+        color: #4a5058;
+        font-size: 30px;
+      }
+      > span:last-child {
+        color: #7d7d7d;
+        font-size: 14px;
+      }
     }
   }
 `;
@@ -234,7 +311,7 @@ img: 'https://storage.todayworkings.com/notice/f55d868e20194776995f4591f146647c.
     title: '08.30 오늘의작업장 앱 업데이트 사전 안내 (필수)', 
     date: '2024-09-06 16:41', 
     content: `안녕하세요, 오늘의작업장입니다.
-신규 기능 추가에 따른 업데이트가 진행되었음을 안내 드립니다.
+신규 기능 추가에 따른 업데이트가 ��행되었음을 안내 드립니다.
 
 원활한 서비스 사용을 위해
 앱 업데이트를 진행해 주세요!
@@ -268,34 +345,39 @@ https://www.todayworkings.kr/forum/view/1046684
 img: 'https://storage.todayworkings.com/notice/a6488dbf6ecb402eaa940a18cc97ccc6.png'
 
 },
- 
 
 ];
 
 const SideBySideContainer = styled.div`
   display: flex;
-  flex-direction: column; // 기본적으로 세로 방향으로 배치
+  flex-direction: column;
   gap: 2rem;
   height: auto;
 
   > * {
-    width: 100%; // 각 자식 요소의 너비를 100%로 설정
+    width: 100%;
   }
 
   @media (min-width: 701px) {
-    flex-direction: row; // 501px 이상에서는 가로 방향으로 배치
-    height: 400px;
+    flex-direction: row;
+    height: 400px; // 고정 높이 설정
     > * {
-      width: 0; // 너비를 0으로 설정하여 flex-grow가 제대로 작동하도록 함
+      width: 0;
       flex: 1;
+      overflow: hidden; // 내용이 넘치는 경우 숨김 처리
     }
   }
 `;
 
+const StyledCustomDropdown = styled(CustomDropdown)`
+  border-radius: 8px; 
+`;
+
 function DashBoard() {
-  const [curLocation, setCurLocation] = useState("전체");
+  const [curLocation, setCurLocation] = useState("전체"); // 기본값을 "전체"로 설정
   const [calenderType, setCalenderType] = useState("일별");
-  const options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+
+  const locationOptions = ["전체", "본사", "공장A", "공장B", "물류센터"];
 
   return (
     <DashBoardWrapper>
@@ -303,16 +385,24 @@ function DashBoard() {
         <span className="title">오늘의 작업장 대시보드</span>
         <div className="userInfo">
           <label className="position">GUEST(인사/업무담당자)</label>
-          <span className="profile"></span>
+          <span className="profile">
+            <UserRound size={30} />
+          </span>
         </div>
       </DashBoardHeader>
       <DashBoardSetter>
-        <div className="subtitle">상세조회</div>
-        <div className="location">
-          <span>{curLocation}</span>
-          <ChevronDown size={18} />
-        </div>
-        <DateRangePicker calenderType={calenderType} />
+        <section>
+          <div className="subtitle">상세조회</div>
+          <StyledCustomDropdown
+            options={locationOptions}
+            value={curLocation}
+            defaultOption="전체"
+            onChange={(selectedOption) => setCurLocation(selectedOption)}
+          
+          />
+          <DateRangePicker calenderType={calenderType} />
+        </section>
+        <section>
         <div
           className={`setter_button ${calenderType === "일별" && "activated"}`}
           onClick={() => {
@@ -342,6 +432,7 @@ function DashBoard() {
           <span>출력</span>
           <Printer size={14} />
         </div>
+        </section>
       </DashBoardSetter>
       <DashBoardAssessment>
         <article>
@@ -350,7 +441,10 @@ function DashBoard() {
             <span>안전작업허가서</span>
             <span>(위험성평가)</span>
           </div>
-          <div>0건</div>
+          <div>
+            <span>0</span>
+            <span>건</span>
+          </div>
         </article>
         <article>
           <div>
@@ -358,19 +452,23 @@ function DashBoard() {
             <span>안전작업허가서</span>
             <span>(위험성평가)</span>
           </div>
-          <div>0건</div>
+          <div>
+            <span>0</span>
+            <span>건</span>
+          </div>
         </article>
         <article>
           <div>
             <span className="pledge">공통</span>
             <span>안전서약서</span>
           </div>
-          <div>0건</div>
+          <div>
+            <span>0</span>
+            <span>건</span>
+          </div>
         </article>
       </DashBoardAssessment>
-      <CustomDropdown options={options} defaultOption="Select" />
       <SideBySideContainer>
-
       <ConstructionSiteMap />
       <BarChartComponent />
       </SideBySideContainer>
