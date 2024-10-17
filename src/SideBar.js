@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 const SidebarWrapper = styled.div`
   position: fixed;
-  top: 60px;
+
   justify-content: center;
   padding: 1.5rem;
   width: 300px;
@@ -30,6 +30,7 @@ const SidebarWrapper = styled.div`
     transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
     width: 100%;
     z-index: 1000;
+      top: 60px;
   }
 
   > div.title {
