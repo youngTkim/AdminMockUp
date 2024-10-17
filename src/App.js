@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import Sidebar from "./SideBar";
 import DashBoard from "./DashBoard";
-import NoticeList from "./Notice/List";
+import NoticeList from "./List";
 import NoticeRegister from "./Notice/Register";
 import NotificationList from "./Notification/List";
 import NotificationRegister from "./Notification/Register";
