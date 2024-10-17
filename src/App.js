@@ -13,7 +13,6 @@ import ProcessWorkingReport from "./Process/WorkingReport";
 import ProcessWorkingToday from "./Process/WorkingToday";
 import WorkerApproval from "./Worker/Approval";
 import WorkerAttendance from "./Worker/Attendance";
-
 const AccordionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,6 +97,7 @@ function App() {
           <Route path="/worker/approval" element={<WorkerApproval />} />
           <Route path="/worker/attendance" element={<WorkerAttendance />} />
         </Routes>
+    
       </ContentContainer>
     </AppContainer>
   );
