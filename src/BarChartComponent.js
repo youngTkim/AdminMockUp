@@ -46,7 +46,7 @@ const BarChart = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  height: 300px;  // 300px에서 400px로 증가
+  height: 200px;  // 300px에서 400px로 증가
 `;
 
 const Bar = styled.div`
@@ -120,7 +120,7 @@ const BarChartComponent = () => {
         <Stat bgColor="#e74c3c" >안전서약서</Stat>
       </Stats>
       <BarChart ref={chartRef}>
-        {[440, 500, 320, 420, 380, 460, 360].map((height, index) => (  // 높이 값 증가
+        {[120, 85, 170, 55, 190, 140, 95].map((height, index) => (  // 랜덤으로 200 이하의 값으로 변경
           <Bar 
             key={index} 
             className="bar" 
