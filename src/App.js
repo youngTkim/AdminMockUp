@@ -13,50 +13,8 @@ import ProcessWorkingReport from "./Process/WorkingReport";
 import ProcessWorkingToday from "./Process/WorkingToday";
 import WorkerApproval from "./Worker/Approval";
 import WorkerAttendance from "./Worker/Attendance";
-const AccordionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  width: 100%;
-`;
 
-const AccordionItem = styled.div`
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 4px;
-`;
 
-const AccordionHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 4px;
-  padding: 15px;
-  cursor: pointer;
-  background-color: ${(props) => (props.isOpen ? "black" : "")};
-  transition: 0.5s ease;
-  &:hover {
-    background-color: #e9ecef;
-  }
-`;
-
-const AccordionContent = styled.div`
-  padding: 0 15px;
-  max-height: ${(props) => (props.isOpen ? "1000px" : "0")};
-  overflow: hidden;
-  transition: 0.5s ease;
-  > ul {
-    li {
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      padding: 1rem;
-    }
-  }
-`;
-
-const AccordionIcon = styled.span`
-  margin-left: 10px;
-`;
 
 const AppContainer = styled.div`
   width: 100%;
@@ -64,15 +22,13 @@ const AppContainer = styled.div`
   background-color: #f3f3f5;
 `;
 
-const ContentContainer = styled.main`
-  width: 100%;
-`;
+
 
 function App() {
   return (
     <AppContainer>
       <Sidebar></Sidebar>
-      <ContentContainer>
+  
         <Routes>
           <Route path="/" element={<DashBoard />} />
           <Route path="/notice/list" element={<NoticeList />} />
@@ -98,7 +54,7 @@ function App() {
           <Route path="/worker/attendance" element={<WorkerAttendance />} />
         </Routes>
     
-      </ContentContainer>
+      
     </AppContainer>
   );
 }

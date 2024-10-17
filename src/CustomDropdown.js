@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 const DropdownContainer = styled.div`
   position: relative;
   width: 100px;
+  flex:1;
 `;
 
 const DropdownHeader = styled.div`
@@ -12,30 +13,32 @@ const DropdownHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
-  height: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  height: 40px;
+  background-color: #ccc;
   cursor: pointer;
   font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 `;
 
-const DropdownListContainer = styled.div`
+const DropdownContent = styled.div`
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 0;
   width: 100%;
   background-color: white;
   border: 1px solid #ccc;
-  border-top: none;
-  max-height: 150px;
-  overflow-y: auto;
+  border-radius: 4px;
+  overflow: hidden;
   z-index: 1000;
 `;
 
 const DropdownList = styled.ul`
-  padding: 0;
+  padding: 20px 0 0;  // Add top padding to make space for the header
   margin: 0;
   list-style-type: none;
+  max-height: 150px;
+  overflow-y: auto;
 `;
 
 const ListItem = styled.li`
@@ -78,7 +81,7 @@ const CustomDropdown = ({ options, defaultOption }) => {
         {isOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
       </DropdownHeader>
       {isOpen && (
-        <DropdownListContainer>
+        <DropdownContent>
           <DropdownList>
             {options.map((option, index) => (
               <ListItem key={index} onClick={() => handleOptionClick(option)}>
@@ -86,7 +89,7 @@ const CustomDropdown = ({ options, defaultOption }) => {
               </ListItem>
             ))}
           </DropdownList>
-        </DropdownListContainer>
+        </DropdownContent>
       )}
     </DropdownContainer>
   );
