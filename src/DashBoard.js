@@ -4,6 +4,8 @@ import { ChevronDown, Printer } from "lucide-react";
 import DateRangePicker from "./DateRangePicker";
 import CustomDropdown from "./DropDown";
 import WeatherComponent from "./Wheather";
+import NoticeList from "./NoticeList";
+
 
 const DashBoardWrapper = styled.div`
   padding: 0rem 2rem 0rem 2rem;
@@ -154,6 +156,119 @@ const DashBoardAssessment = styled.div`
   }
 `;
 
+const notices = [
+  { 
+    id: 1, 
+    title: '10.16 오늘의작업장 앱 업데이트 사전 안내 (필수)', 
+    date: '2024-10-14', 
+    content: `안녕하세요, 오늘의작업장입니다.
+
+신규 기능 추가에 따른
+업데이트가 진행되었음을 안내 드립니다.
+
+원활한 서비스 사용을 위해
+APP 업데이트를 진행해 주세요!
+
+[업데이트 내용]
+1. 회원가입 시, (하청)업체명/부서/직책 필수값 설정
+2. 공지사항 필터 변경
+- 기존 :  #공지사항 #일반 #작업
+- 변경 후 : #전체 #일반 #업데이트
+3. 한국화학연구원 커스터마이징 작업 진행
+4. 에코프로머티리얼즈 커스터마이징 작업 진행
+
+*업데이트 일자: 2024년 10월 16일 수요일
+
+감사합니다.`,
+img: 'https://storage.todayworkings.com/notice/a431068a75344edc953f58357174aa6e.png'
+
+},
+  { 
+    id: 2, 
+    title: '09.30 오늘의작업장 앱 업데이트 사전 안내 (필수)', 
+    date: '2024-10-02 17:36', 
+    content: `안녕하세요, 오늘의작업장입니다.
+
+신규 기능 추가에 따른
+업데이트가 진행되었음을 안내드립니다.
+
+원활한 서비스 사용을 위해
+앱 업데이트를 진행해 주세요!
+
+[업데이트 내용]
+- 업체에 따른 가입 프로세스 업데이트
+- 허가서 보충작업 개별 확인자 서명 추가
+- 허가서 외주작업 시, 발급자 서명 요건 추가 : 승인자 선택
+- 안전서약서 이미지 및 버튼 확대
+- 지시사항 ‘필독' 칩 추가
+- 글자 크기 확대 시 반응형 추가
+- 기타 오류 수정
+
+*업데이트 일자: 2024년 09월 30일 (ver. 1.9.14)
+
+감사합니다.`,
+img: 'https://storage.todayworkings.com/notice/f55d868e20194776995f4591f146647c.png'
+
+},
+  { 
+    id: 3, 
+    title: '오늘의작업장 회사 및 플랫폼 소개서', 
+    date: '2024-09-06 16:44', 
+    content: `안녕하세요. 데이터 기반 현장 서류관리 플랫폼 (주)오늘의작업장입니다.
+
+회사 소개 및 플랫폼 소개 및 계약 절차에 대한 자료 공유 드립니다.
+궁금한 사항이 있으시면 언제든 연락 주세요.
+
+[고객센터]
+010-8227-8845
+
+`,
+img: 'https://storage.todayworkings.com/notice/f55d868e20194776995f4591f146647c.png'
+
+},
+  { 
+    id: 4, 
+    title: '08.30 오늘의작업장 앱 업데이트 사전 안내 (필수)', 
+    date: '2024-09-06 16:41', 
+    content: `안녕하세요, 오늘의작업장입니다.
+신규 기능 추가에 따른 업데이트가 진행되었음을 안내 드립니다.
+
+원활한 서비스 사용을 위해
+앱 업데이트를 진행해 주세요!
+
+[업데이트 내용]
+- 이전 서류 복제 기능 추가
+
+*업데이트 일자: 2024년 08월 30일 (ver. 1.8.9)
+
+감사합니다.
+`,
+img: 'https://storage.todayworkings.com/notice/f55d868e20194776995f4591f146647c.png'
+
+},
+  { 
+    id: 4, 
+    title: 'WEB 관리자페이지 캐시 삭제 안내문', 
+    date: '2024-05-29 03:34', 
+    content: `안녕하세요! (주)오늘의작업장입니다!
+
+저희가 5월 20일(월)에 더 나은 서비스를 위해 서버를 업그레이드했습니다.
+
+기존 관리자페이지 접속하셨던 회원분들께서는, 사용에 어려움이 발생하니
+
+꼭 캐시삭제를 진행 후 접속해주시길 바랍니다~
+
+
+[캐시삭제 방법 알아보러가기]
+https://www.todayworkings.kr/forum/view/1046684
+`,
+img: 'https://storage.todayworkings.com/notice/a6488dbf6ecb402eaa940a18cc97ccc6.png'
+
+},
+ 
+
+];
+
 function DashBoard() {
   const [curLocation, setCurLocation] = useState("전체");
   const [calenderType, setCalenderType] = useState("일별");
@@ -231,6 +346,7 @@ function DashBoard() {
         </article>
       </DashBoardAssessment>
       <CustomDropdown options={options} defaultOption="Select" />
+      <NoticeList notices={notices} />
       
       <WeatherComponent temperature={20} humidity={60} minTemp={15} maxTemp={25} precipitation={30} windSpeed={5} />
     </DashBoardWrapper>
