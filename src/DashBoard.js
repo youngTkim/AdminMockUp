@@ -5,8 +5,8 @@ import DateRangePicker from "./DateRangePicker";
 import CustomDropdown from "./DropDown";
 import WeatherComponent from "./Wheather";
 import NoticeList from "./NoticeList";
-
-
+import NewsComponent from "./NewsComponent";
+import Excel from "./Excel";
 const DashBoardWrapper = styled.div`
   padding: 0rem 2rem 0rem 2rem;
   margin-left: 300px;
@@ -269,6 +269,26 @@ img: 'https://storage.todayworkings.com/notice/a6488dbf6ecb402eaa940a18cc97ccc6.
 
 ];
 
+const SideBySideContainer = styled.div`
+  display: flex;
+  flex-direction: column; // 기본적으로 세로 방향으로 배치
+  gap: 2rem;
+  height: auto;
+
+  > * {
+    width: 100%; // 각 자식 요소의 너비를 100%로 설정
+  }
+
+  @media (min-width: 701px) {
+    flex-direction: row; // 501px 이상에서는 가로 방향으로 배치
+    height: 400px;
+    > * {
+      width: 0; // 너비를 0으로 설정하여 flex-grow가 제대로 작동하도록 함
+      flex: 1;
+    }
+  }
+`;
+
 function DashBoard() {
   const [curLocation, setCurLocation] = useState("전체");
   const [calenderType, setCalenderType] = useState("일별");
@@ -346,8 +366,11 @@ function DashBoard() {
         </article>
       </DashBoardAssessment>
       <CustomDropdown options={options} defaultOption="Select" />
-      <NoticeList notices={notices} />
-      
+      <Excel />
+      <SideBySideContainer>
+        <NoticeList notices={notices} />
+        <NewsComponent />
+      </SideBySideContainer>
       <WeatherComponent temperature={20} humidity={60} minTemp={15} maxTemp={25} precipitation={30} windSpeed={5} />
     </DashBoardWrapper>
   );

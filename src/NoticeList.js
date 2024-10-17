@@ -7,6 +7,8 @@ const ListContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 100%;
+  overflow-y: auto;
+  min-width: 200px;
 `;
 
 const Title = styled.h2`
