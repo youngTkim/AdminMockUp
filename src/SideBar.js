@@ -9,18 +9,28 @@ import {
   Briefcase,
   ChevronDown,
   ChevronUp,
+  Menu,
+  X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const SidebarWrapper = styled.div`
   position: fixed;
+  top: 60px;
   justify-content: center;
   padding: 1.5rem;
   width: 300px;
-  height: 100vh;
+  height: 100%;
   background-color: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
   font-family: "Noto Sans kr";
+  transition: transform 0.3s ease-in-out;
+
+  @media (max-width: 500px) {
+    transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
+    width: 100%;
+    z-index: 1000;
+  }
 
   > div.title {
     font-size: 20px;
@@ -28,6 +38,32 @@ const SidebarWrapper = styled.div`
     padding: 20px 40px 20px 26px;
     font-weight: 500;
   }
+`;
+
+const HeaderBar = styled.div`
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 1rem;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+
+  @media (max-width: 500px) {
+    display: flex;
+  }
+`;
+
+const HamburgerButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
 `;
 
 const AccordionContainer = styled.div`
@@ -86,6 +122,8 @@ const AccordionIcon = styled.span`
 function Sidebar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [openIndex, setOpenIndex] = useState(0);
   const Items = [
     {
       title: "대시보드",
@@ -173,52 +211,71 @@ function Sidebar() {
       ],
     },
   ];
-  const [openIndex, setOpenIndex] = useState(0);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   const toggleAccordion = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
+
   useEffect(() => {}, [pathname]);
 
   return (
-    <SidebarWrapper>
-      <div className="title">오늘의 작업장</div>
-      <AccordionContainer>
-        {Items.map((props, idx) => {
-          const { key, title, index, icon, content } = props;
-          return (
-            <AccordionItem key={key}>
-              <AccordionHeader
-                isOpen={openIndex === idx}
-                onClick={() => toggleAccordion(idx)}
-              >
-                <div className="name">
-                  {icon}
-                  <span>{title}</span>
-                </div>
+    <>
+      <HeaderBar>
+        <HamburgerButton onClick={toggleSidebar}>
+          <Menu size={24} />
+        </HamburgerButton>
+        <div>오늘의 작업장</div>
+        <div></div> {/* 오른쪽 여백을 위한 빈 div */}
+      </HeaderBar>
+      <SidebarWrapper isOpen={isOpen}>
+        <div className="title">
+          오늘의 작업장
+          <HamburgerButton onClick={toggleSidebar}>
+            {/* <X size={24} /> */}
+          </HamburgerButton>
+        </div>
+        <AccordionContainer>
+          {Items.map((props, idx) => {
+            const { key, title, index, icon, content } = props;
+            return (
+              <AccordionItem key={key}>
+                <AccordionHeader
+                  isOpen={openIndex === idx}
+                  onClick={() => toggleAccordion(idx)}
+                >
+                  <div className="name">
+                    {icon}
+                    <span>{title}</span>
+                  </div>
+                  {content && (
+                    <AccordionIcon>
+                      {openIndex === idx ? (
+                        <ChevronUp size={16} />
+                      ) : (
+                        <ChevronDown size={13} />
+                      )}
+                    </AccordionIcon>
+                  )}
+                </AccordionHeader>
                 {content && (
-                  <AccordionIcon>
-                    {openIndex === idx ? (
-                      <ChevronUp size={16} />
-                    ) : (
-                      <ChevronDown size={13} />
-                    )}
-                  </AccordionIcon>
+                  <AccordionContent isOpen={openIndex === idx}>
+                    <ul>
+                      {content.map((contentInfo) => {
+                        return <li key={contentInfo.path}>{contentInfo.name}</li>;
+                      })}
+                    </ul>
+                  </AccordionContent>
                 )}
-              </AccordionHeader>
-              {content && (
-                <AccordionContent isOpen={openIndex === idx}>
-                  <ul>
-                    {content.map((contentInfo) => {
-                      return <li key={contentInfo.path}>{contentInfo.name}</li>;
-                    })}
-                  </ul>
-                </AccordionContent>
-              )}
-            </AccordionItem>
-          );
-        })}
-      </AccordionContainer>
-    </SidebarWrapper>
+              </AccordionItem>
+            );
+          })}
+        </AccordionContainer>
+      </SidebarWrapper>
+    </>
   );
 }
 
