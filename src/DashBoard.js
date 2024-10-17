@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ChevronDown, Printer } from "lucide-react";
 import DateRangePicker from "./DateRangePicker";
 import CustomDropdown from "./DropDown";
+import WeatherComponent from "./Wheather";
 
 const DashBoardWrapper = styled.div`
   padding: 0rem 2rem 0rem 2rem;
@@ -230,6 +231,8 @@ function DashBoard() {
         </article>
       </DashBoardAssessment>
       <CustomDropdown options={options} defaultOption="Select" />
+      
+      <WeatherComponent temperature={20} humidity={60} minTemp={15} maxTemp={25} precipitation={30} windSpeed={5} />
     </DashBoardWrapper>
   );
 }
