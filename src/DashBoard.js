@@ -7,6 +7,7 @@ import WeatherComponent from "./Wheather";
 import NoticeList from "./NoticeList";
 import NewsComponent from "./NewsComponent";
 import Excel from "./Excel";
+import SafetyWorkPermitDashboard from "./SafetyWorkPermitDashboard";
 const DashBoardWrapper = styled.div`
   padding: 0rem 2rem 0rem 2rem;
   margin-left: 300px;
@@ -366,6 +367,7 @@ function DashBoard() {
         </article>
       </DashBoardAssessment>
       <CustomDropdown options={options} defaultOption="Select" />
+      <SafetyWorkPermitDashboard />
       <Excel />
       <SideBySideContainer>
         <NoticeList notices={notices} />
